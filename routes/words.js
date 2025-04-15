@@ -1,4 +1,5 @@
 const express = require('express')
+const Word = require('../models/wordModel')
 
 const router = express.Router() //creates instance of router
 
@@ -7,11 +8,19 @@ router.get('/', (req, res) => {
     res.json({mssg: 'GETS all words'})
 }) //handler
 
-router.get('/:id', (res,req) =>{
+router.get('/:id', (req, res) => {
     res.json({mssg: 'GET a single word'})
 })
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
+    const { title, pronunciation, meanings, synonyms, antonyms, etymology } = req.body;
+
+    try {
+        const word = await Word.create({title, pronunciation, meanings, synonyms, antonyms, etymology})
+        res.status(200).json(word)
+    }catch(error){
+        res.status(400).json({error: error.message})
+    }
     res.json({mssg: "POST a new word"})
 })
 
