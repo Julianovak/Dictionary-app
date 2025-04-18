@@ -3,24 +3,26 @@ const {
     createWord,
     getWord,
     getWords,
+    deleteWord,
+    updateWord
 } = require('../controllers/wordController')
 
 
 const router = express.Router() //creates instance of router
 
-//gets all words
+//GET all words
 router.get('/', getWords)
 
+//GET a word
 router.get('/:id', getWord)
 
+//POST a new word
 router.post('/', createWord)
 
-router.delete('/:id', (req, res) => {
-    res.json({mssg: "Delete a word"})
-})
+//DELETE a word
+router.delete('/:id', deleteWord)
 
-router.patch('/:id', (req, res) => {
-    res.json({mssg: "UPDATE a word"})
-})
+//UPDATE a Word
+router.patch('/:id', updateWord)
 
 module.exports = router //exports the router
